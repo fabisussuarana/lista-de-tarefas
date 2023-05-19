@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './assets/TudoList.css';
 import Icone from './assets/tarefas-vazio.png';
 
 function TudoList() {
 
+    const listaStorage = localStorage.getItem('Lista');
+
     // só atribuo um valor à lista através de setLista, e à novoItem através de setNovoItem
-    const [lista, setLista] = useState([]);
+    const [lista, setLista] = useState(listaStorage ? JSON.parse(listaStorage) : []);
     const [novoItem, setNovoItem] = useState("");
+
+    useEffect(() => {
+        localStorage.setItem('Lista', JSON.stringify(lista));
+    },[lista])
 
     function adicionaItem(form) {
         // Para que o formulário não dispare, recarregue
